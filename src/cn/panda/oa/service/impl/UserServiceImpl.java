@@ -15,6 +15,7 @@ public class UserServiceImpl extends BaseDaoImpl<User> implements UserService {
     @Override
     public void save(User user) {
         // 把密码设为“1234”的MD5摘要
+    	//apache-common-code包提供的功能
         String digest = DigestUtils.md5Hex("1234");
         user.setPassword(digest);
         getSession().save(user); // 保存
@@ -22,6 +23,7 @@ public class UserServiceImpl extends BaseDaoImpl<User> implements UserService {
 
     public void initPassword(Long id) {
         // 把密码设为“1234”的MD5摘要
+    	//apache-common-code包提供的功能
         String digest = DigestUtils.md5Hex("1234");
         User user = getById(id);
         user.setPassword(digest);

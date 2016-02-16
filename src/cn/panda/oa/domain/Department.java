@@ -8,14 +8,14 @@ import java.util.Set;
  *
  * @author panda
  */
+//部门
 public class Department {
-    private Long id;
-    private Set<User> users = new HashSet<User>();
-    private Department parent;
-    private Set<Department> children = new HashSet<Department>();
-
-    private String name;
-    private String description;
+    private Long id;			//id
+    private Set<User> users = new HashSet<User>();		//部门中的用户，一对多
+    private Department parent;												//上级部门，一对一
+    private Set<Department> children = new HashSet<Department>();	//下级部门，多对一
+    private String name;									//部门名称
+    private String description;						//部门描述
 
     public Long getId() {
         return id;
@@ -66,6 +66,7 @@ public class Department {
     }
 
     @Override
+    //重写hashCode方法，用于比较两部门是否相同
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -74,6 +75,7 @@ public class Department {
     }
 
     @Override
+    //重写equals方法
     public boolean equals(Object obj) {
         if (this == obj)
             return true;

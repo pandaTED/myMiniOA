@@ -10,13 +10,17 @@ import java.util.List;
 @Service
 @SuppressWarnings("unchecked")
 public class DepartmentServiceImpl extends BaseDaoImpl<Department> implements DepartmentService {
-
+	
+	
+	//查找所有顶级部门
     public List<Department> findTopList() {
         return getSession().createQuery(//
                 "FROM Department d WHERE d.parent IS NULL")//
                 .list();
     }
-
+    
+    
+    //查找该部门下的所有子级部门
     public List<Department> findChildren(Long parentId) {
         return getSession().createQuery(//
                 "FROM Department d WHERE d.parent.id=?")//

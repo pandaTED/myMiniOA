@@ -2,6 +2,7 @@
     <wb-module deploy-name="My_Mini_OA">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/config"/>
         <property name="context-root" value="My_Mini_OA"/>
         <property name="java-output-path" value="/My_Mini_OA/build/classes"/>
     </wb-module>

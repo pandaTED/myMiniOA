@@ -11,14 +11,14 @@ public class Privilege implements java.io.Serializable {
     /**
      * 权限
      */
-
-    private Long id;
-    private String name;
-    private String url;
-    private String icon;
-    private Privilege parent;
-    private Set<Privilege> children = new HashSet<Privilege>();
-    private Set<Role> roles = new HashSet<Role>();
+	//权限
+    private Long id;				//id
+    private String name;		//名称
+    private String url;			//操作时使用的action名称
+    private String icon;		//前台显示时对应的图标
+    private Privilege parent;//上级权限，一对一
+    private Set<Privilege> children = new HashSet<Privilege>();		//子权限			一对多
+    private Set<Role> roles = new HashSet<Role>();							//权限所属的岗位，一对多
 
     public Privilege() {
 

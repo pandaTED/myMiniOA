@@ -17,7 +17,7 @@
         <many-to-one name="parent" class="Privilege" column="parentId"></many-to-one>
         <!-- children属性，我与Privilege（下级）的一对多 -->
         <!--order by属性可是设置sql语句查询时把结果按照顺序存放，就像是linkedSet-->
-        <set name="children" order-by="id ASC" lazy="false">
+        <set name="children" order-by="id ASC" lazy="false"><!--设置懒加载-->
             <key column="parentId"></key>
             <one-to-many class="Privilege"/>
         </set>

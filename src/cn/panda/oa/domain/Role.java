@@ -6,14 +6,15 @@ import java.util.Set;
 /**
  * 岗位
  *
- * @author tyg
+ * @author panda
  */
+//岗位
 public class Role implements java.io.Serializable {
-    private Long id;
-    private String name;
-    private String description;
-    private Set<User> users = new HashSet<User>();
-    private Set<Privilege> privileges = new HashSet<Privilege>();
+    private Long id;					//id
+    private String name;			//名称
+    private String description;	//描述
+    private Set<User> users = new HashSet<User>();			//该岗位下的用户，一对多
+    private Set<Privilege> privileges = new HashSet<Privilege>();			//该岗位具有的权限，一对多
 
 
     public Long getId() {

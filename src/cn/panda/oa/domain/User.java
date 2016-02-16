@@ -6,15 +6,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class User implements java.io.Serializable {
-    private Long id;
-    private Department department;
-    private Set<Role> roles = new HashSet<Role>();
 
-    private String loginName; // 登录名
-    private String password; // 密码
-    private String name; // 真实姓名
-    private String gender; // 性别
+//用户，有一个初始超级管理员账户，admin，密码默认为1234
+//新建用户时，密码都是1234
+//密码保存时会将密码转为md5摘要
+public class User implements java.io.Serializable {
+    private Long id;			//id
+    private Department department;	//所属部门，一对一
+    private Set<Role> roles = new HashSet<Role>();		//岗位（职责），一对多
+    private String loginName; 	// 登录名
+    private String password; 	// 密码
+    private String name; 		// 真实姓名
+    private String gender; 	// 性别
     private String phoneNumber; // 电话号码
     private String email; // 电子邮件
     private String description; // 说明
@@ -25,6 +28,7 @@ public class User implements java.io.Serializable {
      * @param privilegeName
      * @return
      */
+    
     public boolean hasPrivilegeByName(String privilegeName) {
         // 超级管理员有所有的权限
         if (isAdmin()) {
@@ -32,8 +36,12 @@ public class User implements java.io.Serializable {
         }
 
         // 普通用户
+        //验证权限
+        //获取所有岗位
         for (Role role : roles) {
+        	//获取岗位对应的权限
             for (Privilege privilege : role.getPrivileges()) {
+            	//验证该用户是否具有该权限，如果没有，返回false
                 if (privilegeName.equals(privilege.getName())) {
                     return true;
                 }
@@ -56,6 +64,7 @@ public class User implements java.io.Serializable {
 
         // 普通用户
         List<String> allPrivilegeUrls = (List<String>) ActionContext.getContext().getApplication().get("allPrivilegeUrls"); // 所有需要控制的权限URL的集合
+        //验证所有权限中是否包含该权限
         if (!allPrivilegeUrls.contains(url)) {
             // 1，如果这个URL不是需要的控制的权限，则登录后就能访问
             return true;
@@ -77,6 +86,7 @@ public class User implements java.io.Serializable {
      *
      * @return
      */
+    //验证当前用户是否是超级管理员admin
     public boolean isAdmin() {
         return "admin".equals(loginName);
     }

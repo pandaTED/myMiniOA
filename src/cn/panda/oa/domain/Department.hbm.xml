@@ -22,7 +22,7 @@
         <many-to-one name="parent" class="Department" column="parentId"></many-to-one>
 
         <!-- children属性，我与Department（下级）的一对多 -->
-        <set name="children" cascade="delete">
+        <set name="children" cascade="delete"><!--级联删除，删除父部门，子部门一并删除-->
             <key column="parentId"></key>
             <one-to-many class="Department"/>
         </set>

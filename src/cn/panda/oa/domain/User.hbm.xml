@@ -21,11 +21,10 @@
         <many-to-one name="department" class="Department" column="departmentId"></many-to-one>
 
         <!-- roles属性，我与Role的多对多 -->
-        <set name="roles" table="m_user_role" inverse="false" lazy="false">
+        <set name="roles" table="m_user_role" inverse="false" lazy="false"><!--inverse表明维持关系-->
             <key column="userId"></key>
             <many-to-many class="Role" column="roleId"></many-to-many>
         </set>
-
     </class>
 
 </hibernate-mapping>

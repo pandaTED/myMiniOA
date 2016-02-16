@@ -13,7 +13,7 @@
         <property name="description"></property>
 
         <!-- users属性，我与User的多对多 -->
-        <set name="users" table="m_user_role" inverse="false">
+        <set name="users" table="m_user_role" inverse="false"><!--inverse属性是表明维持关系-->
             <key column="roleId"></key>
             <many-to-many class="User" column="userId"></many-to-many>
         </set>

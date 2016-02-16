@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 
 /**
+ * 
+ * 部署项目时，首先运行该程序，将默认超级管理员账户和所有权限写入数据库
  * Created by panda on 2015/12/18 0018.
  */
 @Component
