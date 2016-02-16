@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!--扩展名-->
+    <constant name="struts.action.extension" value="do"/>
+    <!--开发模式开启-->
+    <constant name="struts.devMode" value="true"/>
+
+    <!--设置主题为simple-->
+    <constant name="struts.ui.theme" value="simple"/>
+
+    <!--默认包的路径-->
+    <package name="default" namespace="/" extends="struts-default">
+
+        <!-- 配置拦截器 -->
+        <interceptors>
+            <!-- 声明检查权限的拦截器 -->
+            <interceptor name="checkPrivilege" class="cn.panda.oa.interceptor.CheckPrivilegeInterceptor"></interceptor>
+            <!-- 声明拦截器栈，将自定义的拦截器添加到拦截器栈 -->
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="checkPrivilege"/>
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
+        <!-- 默认本包中的所有action都要经过myStack这个拦截器栈 -->
+        <default-interceptor-ref name="myStack"></default-interceptor-ref>
+
+        <!-- 全局的result配置，当用户没有权限进行操作时，转到“无权操作页面” -->
+        <global-results>
+            <result name="loginUI">/WEB-INF/jsp/loginAction/login.jsp</result>
+            <result name="privilegeError">/privilegeError.jsp</result>
+        </global-results>
+
+        <!--岗位管理-->
+        <action name="roleAction_*" class="roleAction" method="{1}">
+            <result name="list">/WEB-INF/jsp/roleAction/list.jsp</result>
+            <result name="saveUI">/WEB-INF/jsp/roleAction/saveUI.jsp</result>
+            <result name="savePrivilegeList">/WEB-INF/jsp/roleAction/savePrivilegeUI.jsp</result>
+            <result name="toList" type="redirectAction">roleAction_list</result>
+        </action>
+
+        <!--部门管理-->
+        <action name="departmentAction_*" class="departmentAction" method="{1}">
+            <result name="list">/WEB-INF/jsp/departmentAction/list.jsp</result>
+            <result name="saveUI">/WEB-INF/jsp/departmentAction/saveUI.jsp</result>
+            <result name="toList" type="redirectAction">departmentAction_list?parentId=${parentId}</result>
+        </action>
+
+        <!--用户管理-->
+        <action name="userAction_*" class="userAction" method="{1}">
+            <result name="list">/WEB-INF/jsp/userAction/list.jsp</result>
+            <result name="saveUI">/WEB-INF/jsp/userAction/saveUI.jsp</result>
+            <result name="toList" type="redirectAction">userAction_list</result>
+        </action>
+
+        <!--用户的登录功能-->
+        <action name="login_*" class="loginLogoutAction" method="{1}">
+            <result name="loginUI">/WEB-INF/jsp/loginAction/login.jsp</result>
+            <result name="toIndex" type="redirect">/index.jsp</result>
+        </action>
+
+        <!--用户的注销功能-->
+        <action name="logout_*" class="loginLogoutAction" method="{1}">
+            <result name="logout">/WEB-INF/jsp/loginAction/logout.jsp</result>
+        </action>
+
+        <!--主页面——跳转到index的各个页面-->
+        <action name="indexAction_*" class="indexAction" method="{1}">
+            <result name="loginUI">/WEB-INF/jsp/loginAction/login.jsp</result>
+            <result name="index">/WEB-INF/jsp/indexAction/index.jsp</result>
+            <result name="top">/WEB-INF/jsp/indexAction/top.jsp</result>
+            <result name="left">/WEB-INF/jsp/indexAction/left.jsp</result>
+            <result name="right">/WEB-INF/jsp/indexAction/right.jsp</result>
+            <result name="bottom">/WEB-INF/jsp/indexAction/bottom.jsp</result>
+        </action>
+
+    </package>
+</struts>

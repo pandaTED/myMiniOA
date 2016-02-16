@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+    <!-- 自动扫描与装配bean -->
+    <context:component-scan base-package="cn.panda.oa"></context:component-scan>
+
+    <!--数据库连接信息的配置从这里读取 -->
+
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!-- 数据库连接信息 -->
+        <property name="driverClass" value="${driverClass}"></property>
+        <property name="jdbcUrl" value="${jdbcUrl}"></property>
+        <property name="user" value="${user}"></property>
+        <property name="password" value="${password}"></property>
+        <!-- 其他一些配置 -->
+        <property name="initialPoolSize" value="3"></property>
+        <property name="minPoolSize" value="3"></property>
+        <property name="maxPoolSize" value="15"></property>
+        <property name="acquireIncrement" value="3"></property>
+        <property name="maxStatements" value="8"></property>
+        <property name="maxStatementsPerConnection" value="5"></property>
+        <property name="maxIdleTime" value="1800"></property>
+    </bean>
+
+    <!-- 配置SessionFactory（与Hibernate整合） 配置session工厂 -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+        <property name="mappingLocations" value="classpath:cn/panda/oa/domain/*.hbm.xml"></property>
+    </bean>
+
+    <!-- 配置 Spring 的声明式事务 -->
+    <!-- 1. 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+    <!--声明事务管理-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- 启用基于注解的依赖注入 -->
+    <context:annotation-config/>
+
+</beans>

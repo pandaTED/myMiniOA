@@ -1,0 +1,8 @@
+        <s:form action="roleAction_setPrivilege">
+            <s:hidden name="id"></s:hidden>
+            <s:checkboxlist name="privilegeIds" list="#privilegesList"
+                listKey="id" listValue="name">
+
+            </s:checkboxlist>
+            <s:submit value="提交"></s:submit>
+        </s:form>
